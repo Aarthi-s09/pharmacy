@@ -3,7 +3,6 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 
-// Connect to MongoDB
 mongoose.connect('mongodb+srv://Aarthis09:Aarthi1234@cluster0.kexotzh.mongodb.net/HospitalAppointment?retryWrites=true&w=majority&appName=Cluster00', {
   useNewUrlParser: true,
   useUnifiedTopology: true
@@ -42,6 +41,11 @@ app.post('/add-to-cart', async (req, res) => {
 app.get('/get-cart', async (req, res) => {
   const cart = await Cart.findOne({});
   res.status(200).send(cart ? cart.medicines : []);
+});
+
+app.post('/clear-cart', async (req, res) => {
+  await Cart.deleteOne({});
+  res.status(200).send({ message: 'Cart cleared' });
 });
 
 const PORT = process.env.PORT || 5000;
